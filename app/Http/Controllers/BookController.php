@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-  public function cetak($judul)
+  public function index()
   {
-      return $judul;
+      $books = DB::select('select * from books');
+      return $books;
   }
 }
