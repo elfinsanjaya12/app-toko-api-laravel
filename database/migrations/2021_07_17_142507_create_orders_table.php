@@ -14,14 +14,13 @@ class CreateOrdersTable extends Migration
     public function up()
     {
       Schema::create('orders', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('user_id');
-        $table->float('total_price')->unsigned()->defaults(0);
+        $table->increments('id');
+        $table->integer('user_id');
+        $table->float('total_bill');
         $table->string('invoice_number');
-        $table->enum('status', ['SUBMIT', 'PROCESS', 'FINISH', 'CANCEL']);
+        $table->string('courier_service')->nullable();
+        $table->enum('status', ['SUBMIT', 'PROCESS', 'FINISH', 'CANCEL'])->default('SUBMIT');
         $table->timestamps();
-
-        $table->foreign('user_id')->references('id')->on('users');
     });
     }
 

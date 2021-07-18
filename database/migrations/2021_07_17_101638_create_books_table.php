@@ -14,23 +14,23 @@ class CreateBooksTable extends Migration
     public function up()
     {
       Schema::create('books', function (Blueprint $table) {
-        $table->id();
+        $table->increments('id');
         $table->string('title');
-        $table->string('slug');
-        $table->text('description');
-        $table->string('author');
-        $table->string('publisher');
-        $table->string('cover');
-        $table->float('price');
-        $table->integer('views')->default(0)->unsigned();
-        $table->integer('stock')->default(0)->unsigned();
-        $table->enum('status', ['PUBLISH', 'DRAFT']);
-        $table->integer('created_by');
+        $table->string('slug')->unique();
+        $table->text('description')->nullable();
+        $table->string('author')->nullable();
+        $table->string('publisher')->nullable();
+        $table->string('cover')->nullable();
+        $table->float('price')->unsigned()->default(0);
+        $table->float('weight')->unsigned()->default(0);
+        $table->integer('views')->unsigned()->default(0);
+        $table->integer('stock')->unsigned()->default(1);
+        $table->enum('status', ['PUBLISH', 'DRAFT'])->default('PUBLISH');
+        $table->timestamps(); // created_at, updated_at
+        $table->softDeletes(); // deleted_at
+        $table->integer('created_by')->nullable();
         $table->integer('updated_by')->nullable();
         $table->integer('deleted_by')->nullable();
-
-        $table->timestamps();
-        $table->softDeletes();
     });
     }
 
